@@ -1,0 +1,169 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "PassAsset",
+    "ClassData": {
+        "PassTemplate": {
+            "Name": "TriforcePipelineTemplate",
+            "PassClass": "ParentPass",
+            "Slots": [
+                {
+                    // The Slot name must be exactly "PipelineOutput" because this the Parent Pass that
+                    // Describes a Render Pipeline and the C++ code looks for a PassSlotBinding
+                    // with this name, which will be connected to the SwapChain.
+                    "Name": "PipelineOutput",
+                    "SlotType": "InputOutput"
+                }
+            ],
+            "PassRequests": [     
+                {
+                    "Name": "TopTrianglePass",
+                    "TemplateName": "OneTrianglePassTemplate",
+                    "Enabled": true,
+                    "Connections": [
+                        {
+                            "LocalSlot": "ColorOutput",
+                            "AttachmentRef": {
+                                "Pass": "Parent",
+                                "Attachment": "PipelineOutput"
+                            }
+                        }
+                    ],
+                    "PassData": {
+                        "$type": "FullscreenTrianglePassData",
+                        "ShaderAsset": {
+                            "FilePath": "Shaders/Siggraph2024Gem/OneTriangle.shader"
+                        },
+                        "BindViewSrg": true, // We don't use the ViewSrg, but this avoids a crash.
+                        "ShaderDataMappings": {
+                            "Matrix4x4Mappings": [
+                                {
+                                    //Clip Space Coordinates
+                                    //X goes from -1(left)   to 1(right)
+                                    //Y goes from -1(bottom) to 1(top)
+                                    //Z goes from  0(front)  to 1(back). Doesn't matter in this example because Depth testing is disabled.
+                                    //W should be 1 to avoid perspective divide.
+                                    // (X, Y) = (0, 0) is the center of the screen.
+                                    "Name": "m_clipSpacePositions",
+                                    "Value": [
+                                         0.0,  1.0, 0.0, 1.0, // X, Y, Z, W [Vertex 0]
+                                        -0.5,  0.0, 0.0, 1.0, // X, Y, Z, W [Vertex 1]
+                                         0.5,  0.0, 0.0, 1.0, // X, Y, Z, W [Vertex 2]
+                                         0.0,  0.0, 0.0, 0.0 //Never used by the shader
+                                    ]
+                                },
+                                {
+                                    "Name": "m_vertexColors",
+                                    "Value": [
+                                         0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 0]
+                                         0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 1]
+                                         0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 2]
+                                         0.9, 0.8, 0.0, 1.0 //Never used by the shader
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "Name": "BottomLeftTrianglePass",
+                    "TemplateName": "OneTriangleNoClearPassTemplate",
+                    "Enabled": true,
+                    "Connections": [
+                        {
+                            "LocalSlot": "ColorOutput",
+                            "AttachmentRef": {
+                                "Pass": "Parent",
+                                "Attachment": "PipelineOutput"
+                            }
+                        }
+                    ],
+                    "PassData": {
+                        "$type": "FullscreenTrianglePassData",
+                        "ShaderAsset": {
+                            "FilePath": "Shaders/Siggraph2024Gem/OneTriangle.shader"
+                        },
+                        "BindViewSrg": true, // We don't use the ViewSrg, but this avoids a crash.
+                        "ShaderDataMappings": {
+                            "Matrix4x4Mappings": [
+                                {
+                                    //Clip Space Coordinates
+                                    //X goes from -1(left)   to 1(right)
+                                    //Y goes from -1(bottom) to 1(top)
+                                    //Z goes from  0(front)  to 1(back). Doesn't matter in this example because Depth testing is disabled.
+                                    //W should be 1 to avoid perspective divide.
+                                    // (X, Y) = (0, 0) is the center of the screen.
+                                    "Name": "m_clipSpacePositions",
+                                    "Value": [
+                                        -0.5,  0.0, 0.0, 1.0, // X, Y, Z, W [Vertex 0]
+                                        -1.0, -1.0, 0.0, 1.0, // X, Y, Z, W [Vertex 1]
+                                         0.0, -1.0, 0.0, 1.0, // X, Y, Z, W [Vertex 2]
+                                         0.0,  0.0, 0.0, 0.0 //Never used by the shader
+                                    ]
+                                },
+                                {
+                                    "Name": "m_vertexColors",
+                                    "Value": [
+                                        0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 0]
+                                        0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 1]
+                                        0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 2]
+                                        0.0, 0.0, 0.0, 0.0 //Never used by the shader
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "Name": "BottomRightTrianglePass",
+                    "TemplateName": "OneTriangleNoClearPassTemplate",
+                    "Enabled": true,
+                    "Connections": [
+                        {
+                            "LocalSlot": "ColorOutput",
+                            "AttachmentRef": {
+                                "Pass": "Parent",
+                                "Attachment": "PipelineOutput"
+                            }
+                        }
+                    ],
+                    "PassData": {
+                        "$type": "FullscreenTrianglePassData",
+                        "ShaderAsset": {
+                            "FilePath": "Shaders/Siggraph2024Gem/OneTriangle.shader"
+                        },
+                        "BindViewSrg": true, // We don't use the ViewSrg, but this avoids a crash.
+                        "ShaderDataMappings": {
+                            "Matrix4x4Mappings": [
+                                {
+                                    //Clip Space Coordinates
+                                    //X goes from -1(left)   to 1(right)
+                                    //Y goes from -1(bottom) to 1(top)
+                                    //Z goes from  0(front)  to 1(back). Doesn't matter in this example because Depth testing is disabled.
+                                    //W should be 1 to avoid perspective divide.
+                                    // (X, Y) = (0, 0) is the center of the screen.
+                                    "Name": "m_clipSpacePositions",
+                                    "Value": [
+                                         0.5,  0.0, 0.0, 1.0, // X, Y, Z, W [Vertex 0]
+                                         0.0, -1.0, 0.0, 1.0, // X, Y, Z, W [Vertex 1]
+                                         1.0, -1.0, 0.0, 1.0, // X, Y, Z, W [Vertex 2]
+                                         0.0,  0.0, 0.0, 0.0 //Never used by the shader
+                                    ]
+                                },
+                                {
+                                    "Name": "m_vertexColors",
+                                    "Value": [
+                                        0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 0]
+                                        0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 1]
+                                        0.9, 0.8, 0.0, 1.0, // R, G, B, A [Vertex 2]
+                                        0.0, 0.0, 0.0, 0.0 //Never used by the shader
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "RenderPipelineDescriptor",
+    "ClassData": {
+        "Name": "OneTrianglePipeline",
+        "RootPassTemplate": "OneTrianglePipelineTemplate"
+    }
+}

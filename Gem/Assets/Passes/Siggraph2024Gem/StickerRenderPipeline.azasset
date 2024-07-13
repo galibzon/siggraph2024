@@ -1,0 +1,11 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "RenderPipelineDescriptor",
+    "ClassData": {
+        "Name": "StickerPipeline",
+        "MainViewTag": "MainCamera",
+        "RootPassTemplate": "StickerPipelineTemplate",
+        "AllowModification": false
+    }
+}

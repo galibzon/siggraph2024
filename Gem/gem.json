@@ -1,0 +1,38 @@
+{
+    "gem_name": "Siggraph2024Gem",
+    "version": "1.0.0",
+    "display_name": "Siggraph2024 Deep Dive Graphics Gem",
+    "license": "MIT",
+    "license_url": "",
+    "origin": "Galib Arrieta",
+    "origin_url": "https://github.com/galibzon/siggraph2024",
+    "type": "Code",
+    "summary": "Contains sample code and assets for the Siggraph2024 Project",
+    "canonical_tags": [
+        "Gem"
+    ],
+    "user_tags": [
+        "Siggraph2024",
+        "AtomShader",
+        "Siggraph2024Gem",
+        "Atom",
+        "PBR"
+    ],
+    "platforms": [
+        "Linux",
+        "Windows",
+        "iOS",
+        "Android"
+    ],
+    "icon_path": "",
+    "requirements": "",
+    "documentation_url": "",
+    "dependencies": [
+        "Atom_RPI",
+        "Atom"
+    ],
+    "repo_uri": "https://github.com/galibzon/siggraph2024",
+    "compatible_engines": [],
+    "engine_api_dependencies": [],
+    "restricted": "Siggraph2024Gem"
+}

@@ -1,0 +1,41 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "AssetAliasesSourceData",
+    "ClassData": {
+        "AssetPaths": [
+            {
+                "Name": "OneTrianglePassTemplate",
+                "Path": "Passes/Siggraph2024Gem/OneTriangle.pass"
+            },
+            {
+                "Name": "OneTrianglePipelineTemplate",
+                "Path": "Passes/Siggraph2024Gem/OneTrianglePipeline.pass"
+            },
+            {
+                "Name": "OneTriangleNoClearPassTemplate",
+                "Path": "Passes/Siggraph2024Gem/OneTriangleNoClear.pass"
+            },
+            {
+                "Name": "TriforcePipelineTemplate",
+                "Path": "Passes/Siggraph2024Gem/TriforcePipeline.pass"
+            },
+            {
+                "Name": "NormalVectorDisplayPassTemplate",
+                "Path": "Passes/Siggraph2024Gem/NormalVectorDisplay.pass"
+            },
+            {
+                "Name": "NormalVectorDisplayPipelineTemplate",
+                "Path": "Passes/Siggraph2024Gem/NormalVectorDisplayPipeline.pass"
+            },
+            {
+                "Name": "StickerPassTemplate",
+                "Path": "Passes/Siggraph2024Gem/Sticker.pass"
+            },
+            {
+                "Name": "StickerPipelineTemplate",
+                "Path": "Passes/Siggraph2024Gem/StickerPipeline.pass"
+            }
+        ]
+    }
+}

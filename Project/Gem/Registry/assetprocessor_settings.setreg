@@ -1,0 +1,18 @@
+{
+    "Amazon": {
+        "AssetProcessor": {
+            "Settings": {
+                "ScanFolder Siggraph2024/Assets": {
+                    "watch": "@GEMROOT:Siggraph2024@/Assets",
+                    "recursive": 1,
+                    "order": 101
+                },
+                "ScanFolder Siggraph2024/Registry": {
+                    "watch": "@GEMROOT:Siggraph2024@/Registry",
+                    "recursive": 1,
+                    "order": 102
+                }
+            }
+        }
+    }
+}

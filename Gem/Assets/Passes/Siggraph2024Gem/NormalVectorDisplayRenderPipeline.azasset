@@ -1,0 +1,17 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "RenderPipelineDescriptor",
+    "ClassData": {
+        "Name": "NormalVectorDisplayPipeline",
+        "MainViewTag": "MainCamera",
+        "RootPassTemplate": "NormalVectorDisplayPipelineTemplate",
+        "AllowModification": false,
+        "RenderSettings": {
+            "MultisampleState": {
+                "samples": 1
+            }
+        },
+        "DefaultAAMethod": "MSAA"
+    }
+}

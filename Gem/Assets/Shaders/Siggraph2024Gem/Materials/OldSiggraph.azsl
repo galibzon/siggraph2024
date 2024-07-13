@@ -1,0 +1,70 @@
+/*
+ * Copyright (c) Contributors to the Open 3D Engine Project.
+ * For complete copyright and license terms please see the LICENSE at the root of this distribution.
+ *
+ * SPDX-License-Identifier: Apache-2.0 OR MIT
+ *
+ */
+
+#include <scenesrg.srgi>
+#include <viewsrg.srgi>
+//#define UvSetCount 2
+
+#include <Atom/Features/PBR/DefaultObjectSrg.azsli>
+#include <Atom/Features/ColorManagement/TransformColor.azsli>
+
+struct VSInput
+{
+    float3 m_position : POSITION;
+    float3 m_normal : NORMAL;
+    //float4 m_tangent : TANGENT;
+    //float2 m_uv0 : UV0;
+    //float2 m_uv1 : UV1;
+};
+
+struct VSOutput
+{
+    float4 m_position : SV_Position;
+    float3 m_normal: NORMAL;
+    //float4 m_tangent : TANGENT;
+    //float3 m_worldPosition : UV0;
+
+    // Extended fields (only referenced in this azsl file)...
+    //float2 m_uv[UvSetCount] : UV1;
+    //uint m_instanceId : SV_InstanceID;
+};
+
+VSOutput MainVS(VSInput IN)//, uint instanceId : SV_InstanceID)
+{
+    VSOutput OUT;
+    //OUT.m_instanceId = instanceId;
+    //OUT.m_worldPosition = mul(GetObjectToWorldMatrix(instanceId), float4(IN.m_position, 1.0)).xyz;
+    //OUT.m_worldPosition = mul(ObjectSrg::GetWorldMatrix(), float4(IN.m_position, 1.0)).xyz;
+    float3 worldPosition = mul(ObjectSrg::GetWorldMatrix(), float4(IN.m_position, 1.0)).xyz;
+    OUT.m_position = mul(ViewSrg::m_viewProjectionMatrix, float4(worldPosition, 1.0));
+
+    // Only UV0 is supported
+    //OUT.m_uv[0] = IN.m_uv0;
+    //OUT.m_uv[1] = IN.m_uv1;
+
+    OUT.m_normal = IN.m_normal;
+    //OUT.m_tangent = IN.m_tangent;
+
+    return OUT;
+}
+
+struct PSOutput
+{
+    float4 m_color : SV_Target0;
+};
+
+PSOutput MainPS(VSOutput IN)
+{
+    PSOutput OUT;
+    //const float3 srgbColor = TransformColor(input.m_color.xyz,
+    //                                ColorSpaceId::LinearSRGB,
+    //                                ColorSpaceId::SRGB);
+    const float3 srgbColor = normalize(IN.m_normal);
+    OUT.m_color = float4(srgbColor, 1.0);
+    return OUT;
+}

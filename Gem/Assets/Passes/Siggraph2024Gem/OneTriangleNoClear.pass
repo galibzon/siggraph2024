@@ -1,0 +1,64 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "PassAsset",
+    "ClassData": {
+        "PassTemplate": {
+            "Name": "OneTriangleNoClearPassTemplate",
+            "PassClass": "FullScreenTriangle",
+            "Slots": [
+                {
+                    "Name": "ColorOutput",
+                    "SlotType": "Output",
+                    "ScopeAttachmentUsage": "RenderTarget",
+                    "LoadStoreAction": {
+                        "ClearValue": {
+                            "Value": [
+                                0.75,
+                                0.75,
+                                0.75,
+                                0.0
+                            ]
+                        },
+                        "LoadAction": "DontCare"
+                    }
+                }
+            ],
+            "PassData": {
+                "$type": "FullscreenTrianglePassData",
+                "ShaderAsset": {
+                    "FilePath": "Shaders/Siggraph2024Gem/OneTriangle.shader"
+                },
+                "BindViewSrg": true, // We don't use the ViewSrg, but this avoids a crash.
+                "ShaderDataMappings": {
+                    "Matrix4x4Mappings": [
+                        {
+                            //Clip Space Coordinates
+                            //X goes from -1(left)   to 1(right)
+                            //Y goes from -1(bottom) to 1(top)
+                            //Z goes from  0(front)  to 1(back). Doesn't matter in this example because Depth testing is disabled.
+                            //W should be 1 to avoid perspective divide.
+                            // (X, Y) = (0, 0) is the center of the screen.
+                            "Name": "m_clipSpacePositions",
+                            "Value": [
+                                 0.0,  0.5, 0.0, 1.0, // X, Y, Z, W [Vertex 0]
+                                -0.5, -0.5, 0.0, 1.0, // X, Y, Z, W [Vertex 1]
+                                 0.5, -0.5, 0.0, 1.0, // X, Y, Z, W [Vertex 2]
+                                 0.0,  0.0, 0.0, 0.0 //Never used by the shader
+                            ]
+                        },
+                        {
+                            "Name": "m_vertexColors",
+                            "Value": [
+                                 0.0, 1.0, 0.0, 1.0, // R, G, B, A [Vertex 0]
+                                 1.0, 0.0, 0.0, 1.0, // R, G, B, A [Vertex 1]
+                                 0.0, 0.0, 1.0, 1.0, // R, G, B, A [Vertex 2]
+                                 0.0, 0.0, 0.0, 0.0 //Never used by the shader
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

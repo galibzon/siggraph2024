@@ -1,0 +1,9 @@
+{
+    "description": "For Siggraph2024. This material renders vertex normals as fragment colors",
+    "version": 1,
+    "shaders": [
+        {
+            "file": "Shaders/Siggraph2024Gem/Materials/NormalVectorDisplay.shader"
+        }
+    ]
+}

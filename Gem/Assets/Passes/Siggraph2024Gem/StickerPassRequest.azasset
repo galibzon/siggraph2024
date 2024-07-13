@@ -1,0 +1,19 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "PassRequest",
+    "ClassData": {
+        "Name": "StickerPass",
+        "TemplateName": "StickerPassTemplate",
+        "Enabled": true,
+        "Connections": [
+            {
+                "LocalSlot": "ColorOutput",
+                "AttachmentRef": {
+                    "Pass": "UIPass",
+                    "Attachment": "InputOutput"
+                }
+            }
+        ]
+    }
+}

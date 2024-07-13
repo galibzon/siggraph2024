@@ -1,0 +1,62 @@
+/*
+ * Copyright (c) Contributors to the Open 3D Engine Project.
+ * For complete copyright and license terms please see the LICENSE at the root of this distribution.
+ *
+ * SPDX-License-Identifier: Apache-2.0 OR MIT
+ *
+ */
+
+#include <Atom/Features/ColorManagement/TransformColor.azsli>
+
+#include <scenesrg.srgi>
+#include <viewsrg.srgi>
+
+ShaderResourceGroup PassSrg : SRG_PerPass
+{
+    // The last row is unused.
+    float4x4 m_clipSpacePositions;
+    // The last row is unused
+    float4x4 m_vertexColors;
+}
+
+struct VSInput
+{
+    uint m_vertexID : SV_VertexID;
+};
+
+struct VSOutput
+{
+    float4 m_position : SV_Position;
+    float4 m_color : COLOR;
+};
+
+//Clip Space Coordinates
+//X goes from -1(left)   to 1(right)
+//Y goes from -1(bottom) to 1(top)
+//Z goes from  0(front)  to 1(back)
+//W should be 1 to avoid perspective divide.
+// (X, Y) = (0, 0) is the center of the screen.
+VSOutput MainVS(VSInput input)
+{
+    VSOutput OUT;
+
+    OUT.m_position = PassSrg::m_clipSpacePositions[input.m_vertexID];
+    OUT.m_color = PassSrg::m_vertexColors[input.m_vertexID];
+
+    return OUT;
+}
+
+struct PSOutput
+{
+    float4 m_color : SV_Target0;
+};
+
+PSOutput MainPS(VSOutput input)
+{
+    PSOutput OUT;
+    const float3 srgbColor = TransformColor(input.m_color.xyz,
+                                    ColorSpaceId::LinearSRGB,
+                                    ColorSpaceId::SRGB);
+    OUT.m_color = float4(srgbColor, 1.0);
+    return OUT;
+}

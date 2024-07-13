@@ -1,0 +1,49 @@
+{
+    "project_name": "Siggraph2024",
+    "version": "1.0.0",
+    "project_id": "{2EC9F2AD-099F-43C8-A200-91135CDCF48F}",
+    "origin": "The primary repo for Siggraph2024 goes here: i.e. http://www.mydomain.com",
+    "license": "What license Siggraph2024 uses goes here: i.e. https://opensource.org/licenses/Apache-2.0 Or https://opensource.org/licenses/MIT etc.",
+    "display_name": "Siggraph2024",
+    "summary": "A short description of Siggraph2024.",
+    "canonical_tags": [
+        "Project"
+    ],
+    "user_tags": [
+        "Siggraph2024"
+    ],
+    "icon_path": "preview.png",
+    "engine": "o3de",
+    "external_subdirectories": [
+        "../Gem",
+        "Gem"
+    ],
+    "gem_names": [
+        "Atom",
+        "AtomContent",
+        "AtomLyIntegration",
+        "Atom_TestData",
+        "Camera",
+        "CameraFramework",
+        "DebugDraw",
+        "DevTextures",
+        "DiffuseProbeGrid",
+        "ImGui",
+        "LyShine",
+        "LyShineExamples",
+        "PrimitiveAssets",
+        "Profiler",
+        "RemoteTools",
+        "ScriptEvents",
+        "ScriptedEntityTweener",
+        "Siggraph2024",
+        "Siggraph2024Gem==1.0.0",
+        "Stars",
+        "StartingPointInput",
+        "Terrain",
+        "Vegetation",
+        "WhiteBox"
+    ],
+    "restricted": "Siggraph2024",
+    "engine_version": "4.2.0"
+}

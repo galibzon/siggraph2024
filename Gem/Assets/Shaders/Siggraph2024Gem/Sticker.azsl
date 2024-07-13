@@ -1,0 +1,71 @@
+/*
+ * Copyright (c) Contributors to the Open 3D Engine Project.
+ * For complete copyright and license terms please see the LICENSE at the root of this distribution.
+ *
+ * SPDX-License-Identifier: Apache-2.0 OR MIT
+ *
+ */
+
+#include <Atom/Features/SrgSemantics.azsli>
+
+#include <Atom/Features/ColorManagement/TransformColor.azsli>
+
+ShaderResourceGroup DrawSrg : SRG_PerDraw
+{
+    Texture2D<float4> m_texture;
+    
+    Sampler LinearSampler
+    {
+        MinFilter = Linear;
+        MagFilter = Linear;
+        MipFilter = Linear;
+        AddressU = Clamp;
+        AddressV = Clamp;
+        AddressW = Clamp;
+    };
+}
+
+struct VSInput
+{
+    float3 m_position : POSITION;
+    float2 m_uv : UV0;
+};
+
+struct VSOutput
+{
+    float4 m_position : SV_Position;
+    float2 m_uv : UV0;
+};
+
+//Clip Space Coordinates
+//X goes from -1(left)   to 1(right)
+//Y goes from -1(bottom) to 1(top)
+//Z goes from  0(front)  to 1(back)
+//W should be 1 to avoid perspective divide.
+// (X, Y) = (0, 0) is the center of the screen.
+VSOutput MainVS(VSInput input)
+{
+    VSOutput OUT;
+
+    OUT.m_position = float4(input.m_position, 1);
+    OUT.m_uv = input.m_uv;
+
+    return OUT;
+}
+
+struct PSOutput
+{
+    float4 m_color : SV_Target0;
+};
+
+PSOutput MainPS(VSOutput input)
+{
+    PSOutput OUT;
+
+    float4 color = DrawSrg::m_texture.Sample(DrawSrg::LinearSampler, input.m_uv);
+    const float3 srgbColor = TransformColor(color.xyz,
+                                    ColorSpaceId::LinearSRGB,
+                                    ColorSpaceId::SRGB);
+    OUT.m_color = float4(srgbColor, color.a);
+    return OUT;
+}
