@@ -340,7 +340,20 @@ namespace Siggraph2024Gem
         renderData.m_gpuVertexBuffer = AZ::RPI::BufferSystemInterface::Get()->CreateBufferFromCommonPool(desc);
 
         // While we are at it, initialize the StreamBufferView.
-        renderData.m_gpuVertexBufferView[0] = AZ::RHI::StreamBufferView(*renderData.m_gpuVertexBuffer->GetRHIBuffer(), 0, bufferSize, elementSize);
+        renderData.m_gpuVertexBufferView = AZ::RHI::StreamBufferView(*renderData.m_gpuVertexBuffer->GetRHIBuffer(), 0, bufferSize, elementSize);
+        
+        AZ::RHI::DrawIndexed drawIndexed;
+        drawIndexed.m_vertexOffset = 0;
+        drawIndexed.m_indexCount = VertexCountPerSticker;
+        drawIndexed.m_indexOffset = 0;
+        renderData.m_geometryView.SetDrawArguments(drawIndexed);
+        renderData.m_geometryView.SetIndexBufferView(m_stickerIndexBufferView);
+        renderData.m_geometryView.AddStreamBufferView(renderData.m_gpuVertexBufferView);
+
+        //bool success = AZ::RHI::ValidateStreamBufferViews(m_pipelineState->InputStreamLayout(), renderData.m_geometryView,
+        //    renderData.m_geometryView.GetFullStreamBufferIndices());
+        //AZ_Assert(success, "Invalid streams!");
+
     }
 
     void StickerFeatureProcessor::UpdateGpuVertexBuffer(StickerRenderData& renderData)
@@ -358,24 +371,18 @@ namespace Siggraph2024Gem
         {
             return;
         }
-        AZ::RHI::DrawIndexed drawIndexed;
-        drawIndexed.m_instanceCount = 1;
-        drawIndexed.m_instanceOffset = 0;
-        drawIndexed.m_vertexOffset = 0;
-        drawIndexed.m_indexCount = VertexCountPerSticker;
-        drawIndexed.m_indexOffset = 0;
-
-        AZ::RHI::DrawPacketBuilder drawPacketBuilder{ AZ::RHI::MultiDevice::AllDevices };
-        drawPacketBuilder.Begin(nullptr);
-        drawPacketBuilder.SetDrawArguments(drawIndexed);
-        drawPacketBuilder.SetIndexBufferView(m_stickerIndexBufferView);
-        drawPacketBuilder.AddShaderResourceGroup(renderData.m_drawSrg->GetRHIShaderResourceGroup());
 
         AZ::RHI::DrawPacketBuilder::DrawRequest drawRequest;
         drawRequest.m_listTag = m_stickerShader->GetDrawListTag();
         drawRequest.m_pipelineState = m_pipelineState->GetRHIPipelineState();
-        drawRequest.m_streamBufferViews = renderData.m_gpuVertexBufferView;
+        drawRequest.m_streamIndices = renderData.m_geometryView.GetFullStreamBufferIndices();
+
+        AZ::RHI::DrawPacketBuilder drawPacketBuilder{ AZ::RHI::MultiDevice::AllDevices };
+        drawPacketBuilder.Begin(nullptr);
+        drawPacketBuilder.SetGeometryView(&renderData.m_geometryView);
+        drawPacketBuilder.AddShaderResourceGroup(renderData.m_drawSrg->GetRHIShaderResourceGroup());
         drawPacketBuilder.AddDrawItem(drawRequest);
+
         renderData.m_drawPacket = drawPacketBuilder.End();
     }
 

@@ -12,7 +12,7 @@
       "BlendDest" : "AlphaSourceInverse",
       "BlendAlphaDest" : "AlphaSourceInverse",
       "BlendAlphaOp" : "Add"
-  },
+    },
 
     "DrawList" : "sticker",
 

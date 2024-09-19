@@ -62,15 +62,18 @@ namespace Siggraph2024Gem
         struct StickerRenderData
         {
             StickerProperties m_properties;
+            // Interleaved Position+UV.
             AZStd::array<StickerVertex, VertexCountPerSticker> m_cpuVertices;
+            // Interleaved Position+UV.
             AZ::Data::Instance<AZ::RPI::Buffer> m_gpuVertexBuffer;
-            AZStd::array<AZ::RHI::StreamBufferView, 1> m_gpuVertexBufferView;
+            AZ::RHI::StreamBufferView m_gpuVertexBufferView;
             AZ::Data::Instance<AZ::RPI::ShaderResourceGroup> m_drawSrg;
             //! We need one DrawPacket for each Sticker object.
             //! Even though a DrawPacket can contain several DrawItems,
             //! The idea is that each DrawItem represents the same object but
             //! rendered at a different Pass. In other words each DrawItem is
             //! connected to a Pass. We only use one RasterPass.
+            AZ::RHI::GeometryView m_geometryView;
             AZ::RHI::ConstPtr<AZ::RHI::DrawPacket> m_drawPacket;
             //! The DrawSrg needs update. Most likely the texture asset for this
             //! sticker changed.

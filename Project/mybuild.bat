@@ -1,14 +1,15 @@
 @REM Measure-Command {cmake --build build --target Editor --config profile -- /m | Out-Default}
 @REM Measure-Command {cmake --build build --target Editor --config debug -- /m | Out-Default}
-@REM cmake --build build --target AssetProcessor --config profile -- /m
-@REM cmake --build build --target AtomSampleViewer.GameLauncher --config profile -- /m
-@REM cmake --build build --target AtomSampleViewer.GameLauncher --config debug -- /m
-@REM cmake --build build --target Editor --config debug -- /m
-@REM cmake --build build --target AssetProcessorBatch --config profile -- /m
-@REM cmake --build build --target AtomSampleViewer.GameLauncher --config debug -- /m
-@REM cmake --build build --target Editor --config debug -- /m
 
+@REM cmake --build build --target AssetProcessor --config profile -- /m
+@REM cmake --build build --target AssetProcessorBatch --config profile -- /m
+@REM cmake --build build --target AtomSampleViewer.GameLauncher --config profile -- /m
 cmake --build build --target Editor --config profile -- /m
+
+@REM cmake --build build --target AssetProcessor --config debug -- /m
+@REM cmake --build build --target AssetProcessorBatch --config debug -- /m
+@REM cmake --build build --target AtomSampleViewer.GameLauncher --config debug -- /m
+@REM cmake --build build --target Editor --config debug -- /m
 
 set BINDIR=.\build\bin\profile
 set AP=AssetProcessor.exe
